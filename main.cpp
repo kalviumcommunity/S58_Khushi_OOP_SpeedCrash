@@ -8,7 +8,7 @@ using namespace std;
 const int ROW = 52;
 const int COLUMN = 72;
 
-// Track class definition
+// Initilizing Class as Track
 class Track {
 private:
     char grid[ROW][COLUMN];
@@ -36,7 +36,7 @@ public:
         }
     }
 
-    void printRace() {
+    void printRace() const {
         for (int i = 0; i < ROW; i++) {
             for (int j = 0; j < COLUMN; j++) {
                 cout << grid[i][j];
@@ -53,15 +53,16 @@ public:
         grid[y][x] = value;
     }
 };
-
-// Car class definition
+// initilizing Car as a Class
 class Car {
 private:
-    int xVelocity, yVelocity;
-    int xPosition, yPosition;
+    int xPosition;
+    int yPosition;
+    int xVelocity;
+    int yVelocity;
 
 public:
-    Car(int x, int y) : xVelocity(0), yVelocity(0), xPosition(x), yPosition(y) {}
+    Car(int x, int y) : xPosition(x), yPosition(y), xVelocity(0), yVelocity(0) {}
 
     void updatePosition(int xAcc, int yAcc, const Track &track) {
         this->xVelocity += xAcc;
@@ -79,13 +80,7 @@ public:
     }
 
     bool hasCrashed(const Track &track) const {
-        if (xPosition < 0 || xPosition >= COLUMN || yPosition < 0 || yPosition >= ROW) {
-            return true;
-        }
-        if (track.getCell(xPosition, yPosition) == 'X') {
-            return true;
-        }
-        return false;
+        return (xPosition < 0 || xPosition >= COLUMN || yPosition < 0 || yPosition >= ROW || track.getCell(xPosition, yPosition) == 'X');
     }
 
     bool hasFinished() const {
@@ -94,12 +89,15 @@ public:
 };
 
 int main() {
+    // Initilizing track as Object of Class "Track"
     Track track;
-    Car car(1, 1);
+    // Initilizing cars as Object of Class "Car"
+    Car cars[] = {Car(1, 1), Car(2, 1)}; // array of objects, can be used to expand to more cars for future upgradion
 
     int counter = 0; // counter for seconds
 
-    track.setCell(car.getXPosition(), car.getYPosition(), '0');
+    // Initialize track with the first car's position where car is represented as "0"
+    track.setCell(cars[0].getXPosition(), cars[0].getYPosition(), '0');
     track.printRace();
 
     while (true) {
@@ -114,27 +112,27 @@ int main() {
 
         counter++;
 
-        // Clear previous car position
-        track.setCell(car.getXPosition(), car.getYPosition(), ' ');
+        // Clearing previous car position by replacing it with " "
+        track.setCell(cars[0].getXPosition(), cars[0].getYPosition(), ' ');
 
-        // Update car's position
-        car.updatePosition(xAcceleration, yAcceleration, track);
+        // Updating car's position
+        cars[0].updatePosition(xAcceleration, yAcceleration, track);
 
-        // Check for crash
-        if (car.hasCrashed(track)) {
-            track.setCell(car.getXPosition(), car.getYPosition(), '0');
+        // Checking if car has crash
+        if (cars[0].hasCrashed(track)) {
+            track.setCell(cars[0].getXPosition(), cars[0].getYPosition(), '0');
             track.printRace();
             cout << "Crashed after " << counter << " seconds" << endl;
             return 0;
         }
 
-        // Place car in the new position
-        track.setCell(car.getXPosition(), car.getYPosition(), '0');
+        // Placing car in the new position as "0"
+        track.setCell(cars[0].getXPosition(), cars[0].getYPosition(), '0');
         track.printRace();
 
-        // Check if the car finished the race
-        if (car.hasFinished()) {
-            track.setCell(car.getXPosition(), car.getYPosition(), '0');
+        // Checking if the car have reached the finish line
+        if (cars[0].hasFinished()) {
+            track.setCell(cars[0].getXPosition(), cars[0].getYPosition(), '0');
             track.printRace();
             cout << "You finished the race in " << counter << " seconds!" << endl;
             return 0;

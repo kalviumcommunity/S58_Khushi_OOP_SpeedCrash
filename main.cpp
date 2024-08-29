@@ -64,10 +64,10 @@ public:
     Car(int x, int y) : xVelocity(0), yVelocity(0), xPosition(x), yPosition(y) {}
 
     void updatePosition(int xAcc, int yAcc, const Track &track) {
-        xVelocity += xAcc;
-        yVelocity += yAcc;
-        xPosition += xVelocity;
-        yPosition += yVelocity;
+        this->xVelocity += xAcc;
+        this->yVelocity += yAcc;
+        this->xPosition += xVelocity;
+        this->yPosition += yVelocity;
     }
 
     int getXPosition() const {

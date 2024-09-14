@@ -53,6 +53,7 @@ public:
         grid[y][x] = value;
     }
 };
+
 // initilizing Car as a Class
 class Car {
 private:
@@ -89,16 +90,17 @@ public:
 };
 
 int main() {
-    // Initilizing track as Object of Class "Track"
-    Track track;
-    // Initilizing cars as Object of Class "Car"
-    Car cars[] = {Car(1, 1), Car(2, 1)}; // array of objects, can be used to expand to more cars for future upgradion
+    // Initilizing track as a dynamic object using new
+    Track* track = new Track();
+    
+    // Initilizing cars as dynamic objects
+    Car* cars[] = {new Car(1, 1), new Car(2, 1)};
 
     int counter = 0; // counter for seconds
 
     // Initialize track with the first car's position where car is represented as "0"
-    track.setCell(cars[0].getXPosition(), cars[0].getYPosition(), '0');
-    track.printRace();
+    track->setCell(cars[0]->getXPosition(), cars[0]->getYPosition(), '0');
+    track->printRace();
 
     while (true) {
         int xAcceleration, yAcceleration;
@@ -113,31 +115,48 @@ int main() {
         counter++;
 
         // Clearing previous car position by replacing it with " "
-        track.setCell(cars[0].getXPosition(), cars[0].getYPosition(), ' ');
+        track->setCell(cars[0]->getXPosition(), cars[0]->getYPosition(), ' ');
 
         // Updating car's position
-        cars[0].updatePosition(xAcceleration, yAcceleration, track);
+        cars[0]->updatePosition(xAcceleration, yAcceleration, *track);
 
         // Checking if car has crash
-        if (cars[0].hasCrashed(track)) {
-            track.setCell(cars[0].getXPosition(), cars[0].getYPosition(), '0');
-            track.printRace();
+        if (cars[0]->hasCrashed(*track)) {
+            track->setCell(cars[0]->getXPosition(), cars[0]->getYPosition(), '0');
+            track->printRace();
             cout << "Crashed after " << counter << " seconds" << endl;
+            
+            // Clean up dynamically allocated memory
+            delete track;
+            delete cars[0];
+            delete cars[1];
+
             return 0;
         }
 
         // Placing car in the new position as "0"
-        track.setCell(cars[0].getXPosition(), cars[0].getYPosition(), '0');
-        track.printRace();
+        track->setCell(cars[0]->getXPosition(), cars[0]->getYPosition(), '0');
+        track->printRace();
 
-        // Checking if the car have reached the finish line
-        if (cars[0].hasFinished()) {
-            track.setCell(cars[0].getXPosition(), cars[0].getYPosition(), '0');
-            track.printRace();
+        // Checking if the car has reached the finish line
+        if (cars[0]->hasFinished()) {
+            track->setCell(cars[0]->getXPosition(), cars[0]->getYPosition(), '0');
+            track->printRace();
             cout << "You finished the race in " << counter << " seconds!" << endl;
+            
+            // Clean up dynamically allocated memory
+            delete track;
+            delete cars[0];
+            delete cars[1];
+
             return 0;
         }
     }
+
+    // Clean up dynamically allocated memory in case of any terminance 
+    delete track;
+    delete cars[0];
+    delete cars[1];
 
     return 0;
 }

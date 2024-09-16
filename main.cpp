@@ -102,6 +102,14 @@ public:
     bool hasFinished() const {
         return (yPosition == 51 && xPosition >= 65 && xPosition < 71);
     }
+    static int getTotalCars() {
+    return totalCars;
+}
+
+    static int getTotalCrashes() {
+        return totalCrashes;
+    }
+
 };
 
 
@@ -145,7 +153,7 @@ int main() {
             track->setCell(cars[0]->getXPosition(), cars[0]->getYPosition(), '0');
             track->printRace();
             cout << "Crashed after " << counter << " seconds" << endl;
-            
+            cout << "Total Crashes: " << Car::getTotalCrashes() << endl;
             // Clean up dynamically allocated memory
             delete track;
             delete cars[0];
@@ -163,6 +171,7 @@ int main() {
             track->setCell(cars[0]->getXPosition(), cars[0]->getYPosition(), '0');
             track->printRace();
             cout << "You finished the race in " << counter << " seconds!" << endl;
+            cout << "Total Crashes: " << Car::getTotalCrashes() << endl;
             
             // Clean up dynamically allocated memory
             delete track;

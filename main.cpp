@@ -66,11 +66,15 @@ private:
     static int totalCrashes;  // Static variable to track the total number of crashes   
 
 public:
-    Car(int x, int y) : xPosition(x), yPosition(y), xVelocity(0), yVelocity(0) {totalCars++;};
-    ~Car() {
-        totalCars--;  // Decrement the count when a car is destroyed
-    }
 
+    Car(int x, int y) : xPosition(x), yPosition(y), xVelocity(0), yVelocity(0) {
+        // Increasing the cout when a car is initialized 
+        totalCars++;
+        };
+    ~Car() {
+        // Decrement the count when a car is destroyed
+        totalCars--;  
+    }
     void updatePosition(int xAcc, int yAcc, const Track &track) {
         this->xVelocity += xAcc;
         this->yVelocity += yAcc;
@@ -88,7 +92,8 @@ public:
 
     bool hasCrashed(const Track &track) const {
        if (xPosition < 0 || xPosition >= COLUMN || yPosition < 0 || yPosition >= ROW || track.getCell(xPosition, yPosition) == 'X') {
-            totalCrashes++;  // Increment crash count if the car has crashed
+            // Increment crash count if the car has crashed
+            totalCrashes++;  
             return true;
         }
         return false;
@@ -99,7 +104,8 @@ public:
     }
 };
 
-// Initialize static variables
+
+// Initialize static variables 
 int Car::totalCars = 0;
 int Car::totalCrashes = 0;
 

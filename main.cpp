@@ -62,9 +62,19 @@ private:
     int xVelocity;
     int yVelocity;
 
-public:
-    Car(int x, int y) : xPosition(x), yPosition(y), xVelocity(0), yVelocity(0) {}
+    static int totalCars;     // Static variable to track the total number of cars
+    static int totalCrashes;  // Static variable to track the total number of crashes   
 
+public:
+
+    Car(int x, int y) : xPosition(x), yPosition(y), xVelocity(0), yVelocity(0) {
+        // Increasing the cout when a car is initialized 
+        totalCars++;
+        };
+    ~Car() {
+        // Decrement the count when a car is destroyed
+        totalCars--;  
+    }
     void updatePosition(int xAcc, int yAcc, const Track &track) {
         this->xVelocity += xAcc;
         this->yVelocity += yAcc;
@@ -81,13 +91,23 @@ public:
     }
 
     bool hasCrashed(const Track &track) const {
-        return (xPosition < 0 || xPosition >= COLUMN || yPosition < 0 || yPosition >= ROW || track.getCell(xPosition, yPosition) == 'X');
-    }
+       if (xPosition < 0 || xPosition >= COLUMN || yPosition < 0 || yPosition >= ROW || track.getCell(xPosition, yPosition) == 'X') {
+            // Increment crash count if the car has crashed
+            totalCrashes++;  
+            return true;
+        }
+        return false;
+        }
 
     bool hasFinished() const {
         return (yPosition == 51 && xPosition >= 65 && xPosition < 71);
     }
 };
+
+
+// Initialize static variables 
+int Car::totalCars = 0;
+int Car::totalCrashes = 0;
 
 int main() {
     // Initilizing track as a dynamic object using new

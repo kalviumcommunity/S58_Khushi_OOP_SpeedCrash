@@ -75,6 +75,21 @@ public:
         // Decrement the count when a car is destroyed
         totalCars--;  
     }
+
+    // Accessor methods for position
+    int getXPosition() const {
+        return xPosition;
+    }
+    int getYPosition() const {
+        return yPosition;
+    }
+    // Mutator methods for position (setters)
+    void setXPosition(int x) {
+        xPosition = x;
+    }
+    void setYPosition(int y) {
+        yPosition = y;
+    }
     void updatePosition(int xAcc, int yAcc, const Track &track) {
         this->xVelocity += xAcc;
         this->yVelocity += yAcc;

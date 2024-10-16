@@ -11,9 +11,11 @@ const int COLUMN = 72;
 // Initilizing Class as Track
 class Track {
 private:
+    // Private data member to hold the race grid
     char grid[ROW][COLUMN];
 
 public:
+    // Public method to initialize the track and race grid
     Track() {
         initRace();
     }
@@ -44,11 +46,11 @@ public:
             cout << endl;
         }
     }
-
+    // Accessor method to get the value of a specific grid cell
     char getCell(int x, int y) const {
         return grid[y][x];
     }
-
+    // Mutator method to modify the value of a specific grid cell
     void setCell(int x, int y, char value) {
         grid[y][x] = value;
     }
@@ -56,7 +58,8 @@ public:
 
 // initilizing Car as a Class
 class Car {
-private:
+private: 
+    // Private data members for the car's position and velocity
     int xPosition;
     int yPosition;
     int xVelocity;
@@ -66,7 +69,7 @@ private:
     static int totalCrashes;  // Static variable to track the total number of crashes   
 
 public:
-
+    // Public constructor ,destructor and accessor/mutator method
     Car(int x, int y) : xPosition(x), yPosition(y), xVelocity(0), yVelocity(0) {
         // Increasing the cout when a car is initialized 
         totalCars++;

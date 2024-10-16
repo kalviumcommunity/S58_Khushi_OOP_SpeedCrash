@@ -70,10 +70,26 @@ private:
 
 public:
     // Public constructor ,destructor and accessor/mutator method
+    // 1. Default Constructor
+    Car(){ 
+        xPosition=0;
+        yPosition=0;
+        xVelocity=0;
+        yVelocity=0;
+        }
+    // 2. Parameterized Constructor
     Car(int x, int y) : xPosition(x), yPosition(y), xVelocity(0), yVelocity(0) {
         // Increasing the cout when a car is initialized 
         totalCars++;
         };
+     // 3. Copy Constructor
+    Car(const Car &car) {
+        xPosition = car.xPosition;
+        yPosition = car.yPosition;
+        xVelocity = car.xVelocity;
+        yVelocity = car.yVelocity;
+    }  
+    //  Destructor
     ~Car() {
         // Decrement the count when a car is destroyed
         totalCars--;  
